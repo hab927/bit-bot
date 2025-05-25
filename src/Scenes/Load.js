@@ -95,7 +95,7 @@ class Load extends Phaser.Scene {
 
         this.anims.create({
             key: 'open_door',
-            frames: this.anims.generateFrameNames('tilemap_sheet', { frames: [390]})
+            frames: this.anims.generateFrameNames('tilemap_sheet', { frames: [58]})
         });
 
 
