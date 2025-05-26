@@ -190,6 +190,7 @@ class Platformer extends Phaser.Scene {
         // work with doors
         this.physics.add.overlap(my.sprite.player, this.door1, (obj1, obj2) => {
             if (Phaser.Input.Keyboard.JustDown(this.cKey)) {
+                my.sprite.player.setVelocityY(0);
                 obj1.x = this.door2[0].x;
                 obj1.y = this.door2[0].y;
                 this.sound.play('door', {volume: 0.4});
@@ -387,6 +388,8 @@ class Platformer extends Phaser.Scene {
         this.coins10 = false;
         this.coins20 = false;
         this.coins60 = false;
+
+        this.playerDead = false;
 
         // actual timer
         this.gameTimer = 0;
@@ -614,15 +617,20 @@ class Platformer extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(this.rKey)) {
             this.scene.restart();
         }
+
+        if (this.playerDead) {
+            this.sound.play('death', {volume: 0.6});
+            this.deathCount++;
+            this.playerDead = false;
+        }
     }
 
     playerDeath() {
         this.cameras.main.shake(100, 0.005);
-        this.sound.play('death', {volume: 0.6})
         my.sprite.player.setVelocityY(0);
         my.sprite.player.x = this.spawn[0].x;
         my.sprite.player.y = this.spawn[0].y;
-        this.deathCount++;
+        this.playerDead = true;
     }
 
     win() {
