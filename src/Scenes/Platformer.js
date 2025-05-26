@@ -387,12 +387,22 @@ class Platformer extends Phaser.Scene {
         this.coins10 = false;
         this.coins20 = false;
         this.coins60 = false;
+
+        // actual timer
+        this.gameTimer = 0;
+        let timer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                this.gameTimer++;
+            },
+            loop: true
+        })
     }
 
     update() {
         // update text fields
-        this.minutes = Math.round(this.time.now/60000);
-        this.seconds = Math.round(this.time.now/1000 % 60);
+        this.minutes = Math.floor(this.gameTimer / 60);
+        this.seconds = this.gameTimer % 60;
         this.infoText.setText(
             "coins - " + this.coinCount +
             "\ndeaths - " + this.deathCount + 
@@ -617,10 +627,10 @@ class Platformer extends Phaser.Scene {
 
     win() {
         this.sound.play('win');
-        this.scene.start("win", {
+        this.scene.stop().run("win", {
             coins: this.coinCount,
             deaths: this.deathCount,
-            time: this.time.now
+            time: this.gameTimer
         });
     }
 

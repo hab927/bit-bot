@@ -8,8 +8,8 @@ class Win extends Phaser.Scene {
         this.deaths = data.deaths;
         this.time = data.time;
 
-        this.minutes = Math.round(this.time/60000);
-        this.seconds = Math.round(this.time/1000 % 60);
+        this.minutes = Math.floor(data.time / 60);
+        this.seconds = data.time % 60;
     }
 
     preload() {
