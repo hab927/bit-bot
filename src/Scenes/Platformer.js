@@ -608,6 +608,7 @@ class Platformer extends Phaser.Scene {
     playerDeath() {
         this.cameras.main.shake(100, 0.005);
         this.sound.play('death', {volume: 0.6})
+        my.sprite.player.setVelocityY(0);
         my.sprite.player.x = this.spawn[0].x;
         my.sprite.player.y = this.spawn[0].y;
         this.deathCount++;
